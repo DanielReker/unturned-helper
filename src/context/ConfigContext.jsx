@@ -1,7 +1,7 @@
 import {createContext, useContext, useState} from "react";
 import {useImmer} from "use-immer";
 
-const ConfigContext = createContext();
+const ConfigContext = createContext(null);
 
 export const ConfigProvider = ({ children }) => {
     const [mapName, setMapName] = useState('PEI');

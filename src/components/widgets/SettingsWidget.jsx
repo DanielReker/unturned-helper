@@ -39,7 +39,7 @@ const SettingsWidget = () => {
     const { metadata } = useMapData();
     const { mode: modeTheme, setMode: setModeTheme } = useColorScheme();
 
-    const mapsList = metadata ? metadata.availableMaps : [ 'PEI' ];
+    const mapsList = metadata ? metadata['availableMaps'] : [ 'PEI' ];
     const renderedMapsList = mapsList.map(map => <MenuItem key={map} value={map}>{map}</MenuItem>);
 
     return (

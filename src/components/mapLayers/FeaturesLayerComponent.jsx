@@ -1,10 +1,10 @@
 import {useEffect, useRef} from 'react';
 import useMapData from "../../hooks/useMapData.js";
 import {useMap} from "../../context/MapContext.jsx";
-import Point from "ol/geom/Point.js";
-import Feature from "ol/Feature.js";
-import VectorSource from "ol/source/Vector.js";
-import VectorLayer from "ol/layer/Vector.js";
+import {Point} from "ol/geom.js";
+import {Feature} from "ol";
+import {Vector as VectorSource} from "ol/source.js";
+import {Vector as VectorLayer} from "ol/layer.js";
 import {Style, Text, Stroke, Fill} from "ol/style.js";
 import {useConfig} from "../../context/ConfigContext.jsx";
 

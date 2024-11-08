@@ -1,10 +1,10 @@
 import {useEffect} from 'react';
 import {useConfig} from "../../context/ConfigContext.jsx";
 import useMapData from "../../hooks/useMapData.js";
-import ImageTileSource from "ol/source/ImageTile.js";
+import {ImageTile as ImageTileSource} from "ol/source.js";
 import {useMap} from "../../context/MapContext.jsx";
-import TileLayer from "ol/layer/Tile.js";
-import TileGrid from "ol/tilegrid/TileGrid.js";
+import {Tile as TileLayer} from "ol/layer.js";
+import {TileGrid} from "ol/tilegrid.js";
 
 const TileLayerComponent = ({ zIndex }) => {
     const { mapName, mapType, dataURL } = useConfig();

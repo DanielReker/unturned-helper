@@ -1,7 +1,7 @@
 import React from 'react';
 import {Box} from "@mui/material";
 
-const AboutWidget = ({ onClose }) => {
+const AboutWidget = () => {
     return (
         <Box>
             Work in progress...

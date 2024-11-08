@@ -1,6 +1,6 @@
 import {createContext, useContext, useRef} from "react";
 
-const MapContext = createContext();
+const MapContext = createContext(null);
 
 export const MapProvider = ({ children }) => {
     const mapRef = useRef(null);

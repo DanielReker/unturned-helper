@@ -1,11 +1,16 @@
 import React, { useEffect } from 'react';
-import { Map, View } from 'ol';
+import { Map } from 'ol';
 import 'ol/ol.css';
 import useMapData from "../../hooks/useMapData.js";
 import {MapProvider, useMap} from "../../context/MapContext.jsx";
 import {Box} from '@mui/material';
 import TileLayerComponent from "../mapLayers/TileLayerComponent.jsx";
 import FeaturesLayerComponent from "../mapLayers/FeaturesLayerComponent.jsx";
+
+
+const MIN_ZOOM = 13.5;
+const MAX_ZOOM = 21.5;
+
 
 const MapComponent = ({ children, ...props }) => {
     const { mapBounds } = useMapData();
@@ -15,16 +20,10 @@ const MapComponent = ({ children, ...props }) => {
     useEffect(() => {
         if (!mapRef.current) {
             mapRef.current = new Map({
-                //target: 'map',
                 layers: [],
-                view: new View({
-                    center: [0, 0],
-                    //resolution: 1.000000,
-                    zoom: 30,
-                })
             });
             mapRef.current.on('click', (e) => {
-                console.log(mapRef.current.getCoordinateFromPixel(e.pixel));
+                console.log(`Click coords: ${mapRef.current.getCoordinateFromPixel(e.pixel)}, current zoom: ${mapRef.current.getView().getZoom()}`);
             });
         }
 
@@ -35,8 +34,10 @@ const MapComponent = ({ children, ...props }) => {
 
     useEffect(() => {
         if (mapBounds) {
-            const bounds = mapBounds.worldBounds;
+            const bounds = mapBounds['worldBounds'];
             mapRef.current.getView().fit([bounds.min.x, bounds.min.z, bounds.max.x, bounds.max.z]);
+            mapRef.current.getView().setMinZoom(MIN_ZOOM);
+            mapRef.current.getView().setMaxZoom(MAX_ZOOM);
         }
     }, [mapBounds]);
 

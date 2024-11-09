@@ -42,7 +42,7 @@ const FeaturesLayerComponent = ({ zIndex }) => {
                 }),
                 stroke: new Stroke({
                     color: '#000',
-                    width: 1
+                    width: 2
                 })
             })
         });

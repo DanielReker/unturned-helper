@@ -1,8 +1,9 @@
 import React from 'react';
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ConfigProvider} from "./context/ConfigContext.jsx";
-import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
+import {createTheme, CssBaseline, ThemeProvider, useMediaQuery} from "@mui/material";
 import MobilePage from "./pages/MobilePage.jsx";
+import DesktopPage from "./pages/DesktopPage.jsx";
 
 
 const queryClient = new QueryClient();
@@ -17,9 +18,8 @@ const theme = createTheme({
 });
 
 const SelectedPage = () => {
-    return (
-        <MobilePage />
-    );
+    const isMobile = useMediaQuery((theme) => theme.breakpoints.down('md'));
+    return isMobile ? <MobilePage/> : <DesktopPage/>;
 };
 
 const AppThemed = () => {

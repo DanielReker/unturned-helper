@@ -5,10 +5,13 @@ import {Point} from "ol/geom.js";
 import {Feature} from "ol";
 import {Vector as VectorSource} from "ol/source.js";
 import {Vector as VectorLayer} from "ol/layer.js";
-import {Style, Text, Stroke, Fill} from "ol/style.js";
+import {Style, Text, Stroke, Fill, Icon} from "ol/style.js";
 import {useConfig} from "../../context/ConfigContext.jsx";
+import airdropIcon from "../../assets/icons/airdrop.svg";
+import spawnpointIcon from "../../assets/icons/spawnpoint.svg";
 
 
+// TODO: Remove code duplication
 const FeaturesLayerComponent = ({ zIndex }) => {
     const { levelHierarchy } = useMapData();
 
@@ -17,6 +20,8 @@ const FeaturesLayerComponent = ({ zIndex }) => {
     const mapRef = useMap();
 
     const labelStyleRef = useRef(null);
+    const airdropStyleRef = useRef(null);
+    const spawnpointStyleRef = useRef(null);
 
     const locationsSourceRef = useRef(null);
     const airdropsSourceRef = useRef(null);
@@ -25,6 +30,43 @@ const FeaturesLayerComponent = ({ zIndex }) => {
     const locationsLayerRef = useRef(null);
     const airdropsLayerRef = useRef(null);
     const spawnpointsLayerRef = useRef(null);
+
+
+    // Make styles
+    useEffect(() => {
+        labelStyleRef.current = new Style({
+            text: new Text({
+                font: 'bold 12px Roboto, sans-serif',
+                fill: new Fill({
+                    color: '#FFF',
+                }),
+                stroke: new Stroke({
+                    color: '#000',
+                    width: 1
+                })
+            })
+        });
+
+        airdropStyleRef.current = new Style({
+            image: new Icon({
+                src: airdropIcon,
+                width: 32,
+                height: 32,
+                anchor: [0.5, 1],
+                anchorXUnits: 'fraction',
+                anchorYUnits: 'fraction'
+            })
+        });
+
+        spawnpointStyleRef.current = new Style({
+            image: new Icon({
+                src: spawnpointIcon,
+                width: 32,
+                height: 32
+            })
+        });
+    }, []);
+
 
     // Make sources
     useEffect(() => {
@@ -52,21 +94,17 @@ const FeaturesLayerComponent = ({ zIndex }) => {
                         feature.set('spawnTableID', item['Item']['SpawnTable_ID']);
                         airdropsSourceRef.current.addFeature(feature);
                     }
-
-                    if (item['Type'] === 'Spawnpoint') {
-                        feature.set('ID', item['Item']['ID']);
-                        spawnpointsSourceRef.current.addFeature(feature);
-                    }
                 }
             }
         }
     }, [levelHierarchy]);
 
+    // Locations layer
+
     useEffect(() => {
         if(levelHierarchy) {
             locationsLayerRef.current = new VectorLayer({
                 source: locationsSourceRef.current,
-                style: null,
                 zIndex: zIndex
             });
 
@@ -75,23 +113,6 @@ const FeaturesLayerComponent = ({ zIndex }) => {
             return () => mapRef.current.removeLayer(locationsLayerRef.current);
         }
     }, [levelHierarchy]);
-
-
-
-    useEffect(() => {
-        labelStyleRef.current = new Style({
-            text: new Text({
-                font: 'bold 12px Roboto, sans-serif',
-                fill: new Fill({
-                    color: '#FFF',
-                }),
-                stroke: new Stroke({
-                    color: '#000',
-                    width: 1
-                })
-            })
-        });
-    }, []);
 
     useEffect(() => {
         if (levelHierarchy) {
@@ -107,6 +128,28 @@ const FeaturesLayerComponent = ({ zIndex }) => {
         }
     }, [levelHierarchy, layersSettings.features.locations]);
 
+
+    // Airdrops layer
+
+    useEffect(() => {
+        if(levelHierarchy) {
+            airdropsLayerRef.current = new VectorLayer({
+                source: airdropsSourceRef.current,
+                style: airdropStyleRef.current,
+                zIndex: zIndex
+            });
+
+            mapRef.current.addLayer(airdropsLayerRef.current);
+
+            return () => mapRef.current.removeLayer(airdropsLayerRef.current);
+        }
+    }, [levelHierarchy]);
+
+    useEffect(() => {
+        if (levelHierarchy) {
+            airdropsLayerRef.current.setVisible(layersSettings.features.airdrops.isVisible);
+        }
+    }, [levelHierarchy, layersSettings.features.airdrops]);
 
     return null;
 };

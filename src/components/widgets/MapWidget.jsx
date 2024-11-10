@@ -7,10 +7,12 @@ import {Box, Checkbox, FormControlLabel, Switch} from '@mui/material';
 import TileLayerComponent from "../mapLayers/TileLayerComponent.jsx";
 import FeaturesLayerComponent from "../mapLayers/FeaturesLayerComponent.jsx";
 import MapPopup from "../MapPopup.jsx";
+import ObjectsLayer from "../mapLayers/ObjectsLayer.jsx";
 
 
-const MIN_ZOOM = 13.5;
-const MAX_ZOOM = 21.5;
+// TODO: Move to constants file
+export const MIN_ZOOM = 13.5;
+export const MAX_ZOOM = 21.5;
 
 
 const MapComponent = ({ children, ...props }) => {
@@ -65,6 +67,7 @@ const MapWidget = (props) => {
             <MapComponent {...props}>
                 <TileLayerComponent zIndex={0}/>
                 <FeaturesLayerComponent zIndex={1}/>
+                <ObjectsLayer zIndex={2}/>
             </MapComponent>
         </MapProvider>
     )

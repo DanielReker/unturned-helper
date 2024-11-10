@@ -6,11 +6,13 @@ import CloseIcon from "@mui/icons-material/Close";
 import {getCenter} from 'ol/extent';
 import LocationPopup from "./popups/LocationPopup.jsx";
 import AirdropPopup from "./popups/AirdropPopup.jsx";
+import ObjectPopup from "./popups/ObjectPopup.jsx";
 
 
 const FEATURE_TYPE_NAME = {
     location: 'Location',
-    airdrop: 'Airdrop'
+    airdrop: 'Airdrop',
+    object: 'Object'
 }
 
 const MapPopup = ({ selectedFeature, onClose }) => {
@@ -51,6 +53,7 @@ const MapPopup = ({ selectedFeature, onClose }) => {
         switch (feature.get('type')) {
             case 'location': return (<LocationPopup feature={selectedFeature}/>);
             case 'airdrop': return (<AirdropPopup feature={selectedFeature}/>);
+            case 'object': return (<ObjectPopup feature={selectedFeature}/>);
             default: return null;
         }
     };

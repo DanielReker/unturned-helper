@@ -87,7 +87,7 @@ const SettingsWidget = () => {
                 {renderedMapsList}
             </Select>
 
-            <Heading>Features</Heading>
+            <Heading>Layers</Heading>
             <FormGroup>
                 <FormControlLabel control={<Switch
                     checked={layersSettings.features.locations.isVisible}
@@ -109,11 +109,18 @@ const SettingsWidget = () => {
                     })}
                 />} label='Airdrops'/>
                 <FormControlLabel control={<Switch
-                    checked={layersSettings.features.spawnpoints.isVisible}
+                    checked={layersSettings.objects.isVisible}
                     onChange={e => updateLayersSettings(draft => {
-                        draft.features.spawnpoints.isVisible = e.target.checked;
+                        draft.objects.isVisible = e.target.checked;
                     })}
-                />} label='Spawnpoints'/>
+                />} label='Objects'/>
+                <FormControlLabel control={<Switch
+                    checked={layersSettings.objects.isColorized}
+                    disabled={!layersSettings.objects.isVisible}
+                    onChange={e => updateLayersSettings(draft => {
+                        draft.objects.isColorized = e.target.checked;
+                    })}
+                />} label='Colorized' sx={{ ml: 1 }}/>
             </FormGroup>
         </Box>
     );

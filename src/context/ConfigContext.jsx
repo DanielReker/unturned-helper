@@ -15,11 +15,15 @@ export const ConfigProvider = ({ children }) => {
                 isHiddenVisible: false,
             },
             airdrops: {
-                isVisible: true
+                isVisible: false
             },
             spawnpoints: {
-                isVisible: true
-            }
+                isVisible: false
+            },
+        },
+        objects: {
+            isVisible: false,
+            isColorized: true
         }
     });
 

@@ -33,11 +33,16 @@ const MapPopup = ({ selectedFeature, onClose }) => {
                 },
             });
         }
+    }, []);
 
+    // TODO: Quick workaround, refactor useEffects
+    useEffect(() => {
         if (mapRef.current) {
             mapRef.current.addOverlay(popupRef.current);
+
+            return () => mapRef.current.removeOverlay(popupRef.current);
         }
-    }, []);
+    }, [mapRef.current]);
 
     const selectedFeatureExtent = selectedFeature?.get('geometry')?.getExtent();
     const selectedFeatureCoords = selectedFeatureExtent ? getCenter(selectedFeatureExtent) : null;

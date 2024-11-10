@@ -17,6 +17,7 @@ import TableChartIcon from '@mui/icons-material/TableChart';
 import InfoIcon from '@mui/icons-material/Info';
 import AboutWidget from "../components/widgets/AboutWidget.jsx";
 import CloseIcon from "@mui/icons-material/Close";
+import AssetsWidget from "../components/widgets/AssetsWidget.jsx";
 
 const MobileWindow = ({ children, name, zIndex, isOpen, onClose }) => {
     return (
@@ -59,8 +60,7 @@ const MobilePage = () => {
                     <AboutWidget/>
                 </MobileWindow>
                 <MobileWindow name='Assets' zIndex={2} isOpen={currentWidget === 'assets'} onClose={() => setCurrentWidget('map')}>
-                    <Box sx={{ height: 2000 }}>large content</Box>
-                    <Box>end</Box>
+                    <AssetsWidget/>
                 </MobileWindow>
                 <MobileWindow name='Settings' zIndex={3} isOpen={currentWidget === 'settings'} onClose={() => setCurrentWidget('map')}>
                     <SettingsWidget/>

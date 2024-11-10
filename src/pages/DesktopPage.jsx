@@ -14,6 +14,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import AboutWidget from "../components/widgets/AboutWidget.jsx";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from '@mui/icons-material/Menu';
+import AssetsWidget from "../components/widgets/AssetsWidget.jsx";
 
 
 // TODO: Remove code duplication
@@ -83,8 +84,7 @@ const DesktopPage = () => {
                     <AboutWidget/>
                 </DesktopWindow>
                 <DesktopWindow name='Assets' zIndex={3} isOpen={currentWidget === 'assets'} onClose={() => setCurrentWidget('map')}>
-                    <Box sx={{ height: 2000 }}>large content</Box>
-                    <Box>end</Box>
+                    <AssetsWidget/>
                 </DesktopWindow>
             </Box>
         </Box>

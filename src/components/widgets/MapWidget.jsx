@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { Map } from 'ol';
 import 'ol/ol.css';
 import useMapData from "../../hooks/useMapData.js";
 import {MapProvider, useMap} from "../../context/MapContext.jsx";
-import {Box} from '@mui/material';
+import {Box, Checkbox, FormControlLabel, Switch} from '@mui/material';
 import TileLayerComponent from "../mapLayers/TileLayerComponent.jsx";
 import FeaturesLayerComponent from "../mapLayers/FeaturesLayerComponent.jsx";
+import MapPopup from "../MapPopup.jsx";
 
 
 const MIN_ZOOM = 13.5;
@@ -15,7 +16,10 @@ const MAX_ZOOM = 21.5;
 const MapComponent = ({ children, ...props }) => {
     const { mapBounds } = useMapData();
 
+    const mapElementRef = useRef(null);
     const mapRef = useMap();
+
+    const [ selectedFeature, setSelectedFeature ] = useState(null);
 
     useEffect(() => {
         if (!mapRef.current) {
@@ -23,11 +27,15 @@ const MapComponent = ({ children, ...props }) => {
                 layers: [],
             });
             mapRef.current.on('click', (e) => {
-                console.log(`Click coords: ${mapRef.current.getCoordinateFromPixel(e.pixel)}, current zoom: ${mapRef.current.getView().getZoom()}`);
+                const coords = mapRef.current.getCoordinateFromPixel(e.pixel);
+                console.log(`Click coords: ${coords}, current zoom: ${mapRef.current.getView().getZoom()}`);
+
+                const feature = mapRef.current.forEachFeatureAtPixel(e.pixel, feature => feature, { hitTolerance: 4 });
+                setSelectedFeature(feature);
             });
         }
 
-        mapRef.current.setTarget('map');
+        mapRef.current.setTarget(mapElementRef.current);
 
         return () => mapRef.current.setTarget(null);
     }, []);
@@ -42,9 +50,12 @@ const MapComponent = ({ children, ...props }) => {
     }, [mapBounds]);
 
     return (
-        <Box id="map" {...props}>
-            {children}
-        </Box>
+        <>
+            <Box ref={mapElementRef} {...props}>
+                {children}
+            </Box>
+            <MapPopup selectedFeature={selectedFeature} onClose={() => setSelectedFeature(undefined)}/>
+        </>
     );
 }
 

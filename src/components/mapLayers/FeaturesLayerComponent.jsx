@@ -84,6 +84,7 @@ const FeaturesLayerComponent = ({ zIndex }) => {
 
 
                     if (item['Type'] === 'LocationDevkitNode') {
+                        feature.set('type', 'location');
                         feature.set('name', item['Item']['LocationName']);
                         feature.set('isVisibleOnMap', item['Item']['IsVisibleOnMap']);
 
@@ -91,6 +92,7 @@ const FeaturesLayerComponent = ({ zIndex }) => {
                     }
 
                     if (item['Type'] === 'AirdropDevkitNode') {
+                        feature.set('type', 'airdrop');
                         feature.set('spawnTableID', item['Item']['SpawnTable_ID']);
                         airdropsSourceRef.current.addFeature(feature);
                     }

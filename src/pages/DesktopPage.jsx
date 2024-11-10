@@ -73,7 +73,7 @@ const DesktopPage = () => {
             <Box sx={{ flexGrow: 1, position: 'relative' }} ref={containerRef}>
                 <Box sx={{ display: 'flex', position: 'absolute', inset: 0 }}>
                     <Collapse in={isSidebarOpen} orientation='horizontal'>
-                        <Paper sx={{ width: 'max-content', height: '100%', px: 2, overflowY: 'auto', scrollbarWidth: 'thin', scrollbarGutter: 'stable' }} elevation={1}>
+                        <Paper sx={{ width: 'max-content', height: '100%', px: 2, overflowY: 'auto', scrollbarWidth: 'thin', scrollbarGutter: 'stable' }} elevation={1} square>
                             <SettingsWidget/>
                         </Paper>
                     </Collapse>

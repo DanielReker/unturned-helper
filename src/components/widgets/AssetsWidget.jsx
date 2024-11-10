@@ -48,7 +48,8 @@ const AssetsWidget = () => {
             const assetFullName = asset?.['translation']?.['Name'] || '';
 
             return `${assetGuid}|${assetName}|${assetFullName}`;
-        }
+        },
+        limit: 30
     });
 
 
